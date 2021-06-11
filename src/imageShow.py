@@ -1,8 +1,9 @@
 import sys
 import tkinter
+import PIL
 from PIL import Image, ImageTk
 
-bbrash = Image.open ('././bbrash-1.jpg');
+bbrash = Image.open ('../../bbrash-1.jpg');
 
 def showPIL(pilImage):
     root = tkinter.Tk()
