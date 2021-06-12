@@ -32,14 +32,13 @@ import time
 #------------------------------------------------------------------------
 #------------------------------------------------------------------------
 #read the direction and number of steps; if steps are 0 exit
-try:
-    direction = sys.argv[1]
-    steps = int(float(sys.argv[2]))
-except:
-    steps = 0
+direction = 'left'
+steps = 2500
+#except:
+#    steps = 0
 
 #print which direction and how many steps
-print("You told me to turn %s %s steps.") % (direction, steps)
+#print("You told me to turn %s %s steps.") % (direction, steps)
 #------------------------------------------------------------------------
 #------------------------------------------------------------------------
 
@@ -86,7 +85,6 @@ WaitTime = 0.000001
 #------------------------------------------------------------------------
 # Start main loop
 while StepCounter < steps:
-
     #turning the gpio on and off tells the easy driver to take one step
     gpio.output(24, True)
     gpio.output(24, False)
@@ -94,6 +92,7 @@ while StepCounter < steps:
 
     #Wait before taking the next step...this controls rotation speed
     time.sleep(WaitTime)
+print("StepCounter")
 #------------------------------------------------------------------------
 #------------------------------------------------------------------------
 
