@@ -3,8 +3,8 @@ import tkinter
 import PIL
 import time
 from PIL import Image, ImageTk
-
-bbrash = Image.open ("../../bbrash-1.jpg");
+print(sys.argv)
+bbrash = Image.open (sys.argv[1])
 
 def showPIL(pilImage):
     root = tkinter.Tk()
