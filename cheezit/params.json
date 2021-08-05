@@ -1,9 +1,9 @@
 {
-	"exposure_time" = 1
-	"first_layer_exposure_time" = 5
-	"layer_thickness" = 2
-	"step_delay" = 0.001
-	"retraction_dwell_time" = 0
-	"setting_time" = 1
-	"retraction_depth" = 10
+	"exposure_time" : 20,
+	"first_layer_exposure_time" : 80,
+	"layer_thickness" : 2,
+	"step_delay" : 0.0002,
+	"retraction_dwell_time" : 2,
+	"setting_time" : 2,
+	"retraction_depth" : 75
 }

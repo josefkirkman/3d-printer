@@ -18,7 +18,7 @@ stepper = RpiMotorLib.A4988Nema(direction, step, stepper_pins, "A4988")
 
 print("scrub a dub dub")
 
-for i in range(int(WASH_TIME/(4*(WAIT_TIME)))):
+for i in range(5):    #int(WASH_TIME/(4*(WAIT_TIME)))):
 	stepper.motor_go(False, "1/16", 16 * WASH_STEPS, STEPDELAY, False, 0)
 	time.sleep(WAIT_TIME)
 	stepper.motor_go(True, "1/16", 16 * WASH_STEPS, STEPDELAY, False, 0)
