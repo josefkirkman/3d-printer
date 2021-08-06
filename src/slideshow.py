@@ -57,10 +57,10 @@ class printer(tkinter.Tk):
             self.title(os.path.basename(current_frame))
             if not pc_mode:
                 # pwm.ChangeDutyCycle(100)
-                GPIO.output(PWM_PIN, GPIO.LOW) # off
-            self.after((FIRST_LAYER_TIME - LAYER_TIME + self.delay) * 1000, self.show_black)
-        elif self.frame_index < 20:#len(self.pictures):
-            current_frame = self.pictures[1]#self.frame_index]
+                GPIO.output(PWM_PIN, GPIO.LOW) # on
+            self.after(int((FIRST_LAYER_TIME - LAYER_TIME + self.delay) * 1000), self.show_black)
+        elif self.frame_index < len(self.pictures):
+            current_frame = self.pictures[self.frame_index]
             self.frame_index += 1
             display_frame = ImageTk.PhotoImage(Image.open(current_frame))
             self.picture_display.config(image=display_frame)
@@ -72,10 +72,10 @@ class printer(tkinter.Tk):
             time.sleep(int(RETRACTION_DWELL_TIME))
             if not pc_mode:
                 stepper.motor_go(True, "1/16" , 16 * (RETRACTION_DEPTH - LAYER_HEIGHT), STEPDELAY, False, 0)
-            self.after(self.delay * 1000, self.show_black)
+            self.after(int(self.delay * 1000), self.show_black)
             time.sleep(int(SETTING_TIME))
             if not pc_mode:
-                GPIO.output(PWM_PIN, GPIO.LOW) # off
+                GPIO.output(PWM_PIN, GPIO.LOW) # on
         else:
             if not pc_mode:
                 stepper.motor_go(True, "1/16" , 10 * 16 * LAYER_HEIGHT, STEPDELAY, False, 0)
@@ -92,7 +92,7 @@ class printer(tkinter.Tk):
         self.title(os.path.basename(current_frame))
         self.after(1+int(1000 * (LAYER_HEIGHT + RETRACTION_DEPTH) * STEPDELAY), self.show_layers)
         if not pc_mode:
-            GPIO.output(PWM_PIN, GPIO.HIGH) # on
+            GPIO.output(PWM_PIN, GPIO.HIGH) # off
 
 # Collects image files from "layers" directory (which is in same directory as this script).
 layers = []
