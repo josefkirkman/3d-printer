@@ -44,7 +44,7 @@ class printer(tkinter.Tk):
         self.picture_display.pack(expand=True, fill="both")
 
     def show_layers(self):
-        print(self.frame_index)
+        #print('loop' + str(self.frame_index))
         if self.frame_index == 0:
             # longer first layer
             current_frame = self.pictures[self.frame_index]
