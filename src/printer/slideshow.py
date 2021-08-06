@@ -13,13 +13,15 @@ print_folder_path = sys.argv[sys.argv.index('-f') + 1]
 with open(os.path.join(print_folder_path,'params.json')) as f:
     params = json.load(f)
 
+#print(params)
+
 LAYER_TIME = params['exposure_time'] # in seconds, exposure time
 FIRST_LAYER_TIME = params['first_layer_exposure_time'] # in seconds, first layer exposure time
 LAYER_HEIGHT = params['layer_thickness'] # layer thickness
 STEPDELAY = params['step_delay'] # step_delay
 RETRACTION_DWELL_TIME = params['retraction_dwell_time']
 SETTING_TIME = params['setting_time']
-RETRACTION_DEPTH = int(params['retraction_depth']) 
+RETRACTION_DEPTH = int(params['retraction_depth'])
 PWM_PIN = 12
 # NUM_FIRST_LAYERS = 2
 
@@ -40,7 +42,7 @@ class printer(tkinter.Tk):
             self.pictures.append(frame)
         self.picture_display = tkinter.Label(self)
         self.picture_display.pack(expand=True, fill="both")
-    
+
     def show_layers(self):
         print(self.frame_index)
         if self.frame_index == 0:
@@ -72,7 +74,7 @@ class printer(tkinter.Tk):
             stepper.motor_go(True, "1/16" , 10 * 16 * LAYER_HEIGHT, STEPDELAY, False, 0)
             pwm.stop()
             sys.exit()
-            
+
     def show_black(self):
         current_frame = "black.jpg"
         display_frame = ImageTk.PhotoImage(Image.open(current_frame))
@@ -89,9 +91,15 @@ for filename in os.listdir(os.path.join(print_folder_path,'layers')):
     if filename.endswith(".jpg") or filename.endswith(".png"):
         layers.append(os.path.join(print_folder_path,'layers',filename))
 
-# Sorts the image files (cause I'm not sure if the above for loop goes in any particular order). 
-layers = sorted(layers)
-
+# Sorts the image files (cause I'm not sure if the above for loop goes in any particular order).
+enumerated_layers = []
+for layer in layers:
+    print(os.path.basename(layer)[:os.path.basename(layer).index('.')])
+    enumerated_layers.append((int(os.path.basename(layer)[:os.path.basename(layer).index('.')]),layer))
+enumerated_layers = sorted(enumerated_layers)
+for i in range(len(layers)):
+    layers[i] = enumerated_layers[i][1]
+print(layers)
 # Sets up PWM.
 global pwm
 GPIO.setwarnings(False)
@@ -110,3 +118,4 @@ stepper = RpiMotorLib.A4988Nema(direction, step, GPIO_pins, "A4988")
 main = printer(layers, LAYER_TIME + RETRACTION_DWELL_TIME + SETTING_TIME)
 main.show_layers()
 main.mainloop()
+
